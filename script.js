@@ -71,3 +71,5 @@ function loadSound() {
     let audio = new Audio("Assets/Sounds/start.mp3");
     audio.play();
 }
+
+console.log("Push Pull");
