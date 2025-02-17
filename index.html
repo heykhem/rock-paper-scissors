@@ -3,46 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rock Paper Scissors</title>
+    <title>Rock Paper Scissor Game</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- <div class="start-menu">
+      <div class="start-wrapper">
+        <button onclick="gStart(); loadSound()" class="st-btn">
+          Start Game
+        </button>
+      </div>
+    </div> -->
     <div class="container">
-      <button onclick="run(0)">Rock</button>
-      <button onclick="run(1)">Paper</button>
-      <button onclick="run(2)">Scissors</button>
-      <br />
-      <br />
-      <p id="result">Play New Game</p>
-    </div>
+      <div class="wrapper">
+        <button onclick="playSound(); run(0)" class="btn">
+          <i class="fa-solid fa-hand-back-fist" style="color: #ffffff"></i>
+          <span class="w-text">Rock</span>
+        </button>
+        <button onclick="playSound(); run(1)" class="btn">
+          <i class="fa-solid fa-hand" style="color: #ffffff"></i>
+          <span class="w-text">Paper</span>
+        </button>
+        <button onclick="playSound(); run(2)" class="btn">
+          <i
+            class="fa-solid fa-hand-scissors fa-rotate-90"
+            style="color: #ffffff"
+          ></i>
+          <span class="w-text">Scissors</span>
+        </button>
+      </div>
 
+      <div class="result-wrap">
+        <p id="result">Start the Game</p>
+      </div>
+
+      <div class="hand-wrapper">
+        <div class="left-hand-wrapper">
+          <div class="lhand">
+            <img
+              src="Assets/rock.png"
+              alt=""
+              class="limg move"
+              draggable="false"
+            />
+            <div class="linfo">
+              <p style="opacity: 30%">
+                Opponent is choising a <span id="p2choice"></span>...
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="right-hand-wrapper">
+          <div class="rhand">
+            <img src="Assets/rock.png" alt=" " class="rimg" draggable="false" />
+          </div>
+        </div>
+      </div>
+    </div>
     <footer>
       <p>
         Copyright ©
         <script>
           document.write(new Date().getFullYear());
         </script>
-        by Khem Raj Budhathoki
+        by Khem Raj Budhathoki, Ishan Ghimire &nbsp;
+        <a href="https://github.com/heykhem" target="_blank" class="social"
+          >Github <i class="fa-brands fa-github" style="color: black"></i
+        ></a>
       </p>
     </footer>
 
-    <script>
-      function run(a) {
-        let choice = ["Rock", "Paper", "Scissor"];
-        var player1 = a;
-        var player2 = Math.floor(Math.random() * 3);
-        var finalRes = winCheck(player1, player2);
-        document.getElementById(
-          "result"
-        ).innerHTML = `${finalRes} <br> You select ${choice[player1]} and Computer select ${choice[player2]}`;
-      }
-
-      function winCheck(x, y) {
-        return x === y
-          ? "You Win!"
-          : x === (y + 1) % 3
-          ? "You Win"
-          : "You Lose!";
-      }
-    </script>
+    <script
+      src="https://kit.fontawesome.com/07b482046c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
   </body>
 </html>
