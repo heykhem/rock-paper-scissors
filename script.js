@@ -72,4 +72,4 @@ function loadSound() {
     audio.play();
 }
 
-console.log("Push Pull");
+
