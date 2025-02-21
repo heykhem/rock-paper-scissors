@@ -7,24 +7,17 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!-- <div class="start-menu">
-      <div class="start-wrapper">
-        <button onclick="gStart(); loadSound()" class="st-btn">
-          Start Game
-        </button>
-      </div>
-    </div> -->
     <div class="container">
       <div class="wrapper">
-        <button onclick="playSound(); run(0)" class="btn">
+        <button onclick="playSound(); playRound(0)" class="btn">
           <i class="fa-solid fa-hand-back-fist" style="color: #ffffff"></i>
           <span class="w-text">Rock</span>
         </button>
-        <button onclick="playSound(); run(1)" class="btn">
+        <button onclick="playSound(); playRound(1)" class="btn">
           <i class="fa-solid fa-hand" style="color: #ffffff"></i>
           <span class="w-text">Paper</span>
         </button>
-        <button onclick="playSound(); run(2)" class="btn">
+        <button onclick="playSound(); playRound(2)" class="btn">
           <i
             class="fa-solid fa-hand-scissors fa-rotate-90"
             style="color: #ffffff"
@@ -43,7 +36,7 @@
             <img
               src="Assets/rock.png"
               alt=""
-              class="limg move"
+              class="limg lmove"
               draggable="false"
             />
             <div class="linfo">
@@ -55,7 +48,12 @@
         </div>
         <div class="right-hand-wrapper">
           <div class="rhand">
-            <img src="Assets/rock.png" alt=" " class="rimg" draggable="false" />
+            <img
+              src="Assets/Rrock.png"
+              alt=" "
+              class="rimg"
+              draggable="false"
+            />
           </div>
         </div>
       </div>
@@ -73,6 +71,12 @@
       </p>
     </footer>
 
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script
       src="https://kit.fontawesome.com/07b482046c.js"
       crossorigin="anonymous"

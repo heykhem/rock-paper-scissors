@@ -7,4 +7,4 @@
 
 Live Demo:- <https://heykhem.github.io/Rock-Paper-Scissors-Game/>
 
-New Functionaliy coming soon.
+New features coming soon.
