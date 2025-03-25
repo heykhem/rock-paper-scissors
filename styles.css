@@ -72,7 +72,7 @@ body {
 .result-wrap {
   padding: 10px 20px;
   position: absolute;
-  top: 15%;
+  top: 10%;
   transform: translate(-50%, -50%);
   left: 50%;
   text-align: center;
@@ -82,6 +82,21 @@ body {
   background-color: #00000012;
   border-radius: 6px;
   border: 1px solid #ffffff45;
+  /* background-color: green; */
+}
+
+.score-board {
+  /* background-color: rgb(175, 196, 175); */
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 40px;
+}
+.score-board span {
+  font-size: 2rem;
 }
 
 .result-wrap p {
@@ -125,10 +140,10 @@ img {
 }
 
 .lhand img {
-  width: 400px;
+  width: 390px;
 }
 .rimg {
-  width: 400px;
+  width: 390px;
 }
 
 .linfo {

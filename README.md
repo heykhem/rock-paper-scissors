@@ -5,6 +5,6 @@
 
 ![game ui](./Assets/GameUI.png)
 
-Live Demo:- <https://heykhem.github.io/Rock-Paper-Scissors-Game/>
+Live Demo:- <https://heykhem.github.io/rock_paper_scissors_game//>
 
 New features coming soon.
