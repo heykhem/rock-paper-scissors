@@ -28,16 +28,24 @@
 
       <div class="display_box">
         <div class="result-wrap">
-          <p id="result">Start the Game</p>
+          <h1 id="result">Start the Game</h1>
         </div>
         <div class="score-board">
-          <span class="user-score">Player: 0</span>
-          <span class="computer-score">Computer: 0</span>
+          <div class="score-box-container">
+            <span class="computer-score">0</span>
+          </div>
+          <div class="score-box-container">
+            <span class="user-score">0</span>
+          </div>
         </div>
       </div>
 
       <div class="hand-wrapper">
         <div class="left-hand-wrapper">
+          <div class="left-player-info">
+            <div class="status-pulse"></div>
+            Computer
+          </div>
           <div class="lhand">
             <img
               src="Assets/rock.png"
@@ -46,13 +54,17 @@
               draggable="false"
             />
             <div class="linfo">
-              <p style="opacity: 80%" class="para">
+              <p class="para">
                 Opponent is choising a <span id="p2choice"></span>...
               </p>
             </div>
           </div>
         </div>
         <div class="right-hand-wrapper">
+          <div class="left-player-info right-player-info">
+            <div class="status-pulse"></div>
+            You
+          </div>
           <div class="rhand">
             <img
               src="Assets/Rrock.png"
