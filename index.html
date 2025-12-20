@@ -18,25 +18,34 @@
         <div class="menu-top">
           <div class="game-name">
             <span class="game-special-name">RPS</span> <br />
-            Rock Paper Scissors
+            The Underdog Edition
           </div>
 
           <div class="game-options no-select">
             <button class="game-btn new-game">New Game</button>
-            <button class="game-btn continue-game">Continue</button>
-            <button class="game-btn game-history">History</button>
+            <button class="game-btn continue-game display-none">
+              Continue
+            </button>
+            <button class="game-btn game-history display-none">History</button>
           </div>
         </div>
 
         <div class="game-settings no-select">
-          <button class="game-settings-btn">
-            <i class="fa-solid fa-user" style="color: #ffffff"></i
-            ><span class="gs-width-fixed"> Profile </span>
-          </button>
-          <button class="game-settings-btn">
-            <i class="fa-solid fa-gear" style="color: #ffffff"></i
-            ><span class="gs-width-fixed"> Settings </span>
-          </button>
+          <div class="game-login-user-btn">
+            <div class="guest-user-top">
+              <div class="guest-user-icon-box">
+                <img src="./Assets/avatar/nova.png" alt="" />
+              </div>
+              <div class="guest-user-name">
+                <div class="guest-user-display-name">Guest User</div>
+                <div class="guest-user-username">guest_mittens</div>
+              </div>
+            </div>
+            <p class="show-alert-about-progress">SIGN UP TO SAVE PROGRESS</p>
+            <button class="game-login-btn">
+              <span> LOGIN /REGISTER </span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -186,7 +195,10 @@
     <!-- MAIN MENU MODAL END -->
 
     <!-- NEW GAME MODAL BEGIN -->
-    <div class="modal modal-container new-game-modal" style="display: none">
+    <div
+      class="modal modal-container new-game-modal no-select"
+      style="display: none"
+    >
       <div class="modal-wrapper">
         <div class="modal-game-rounds">
           <h3>Rounds</h3>
@@ -210,7 +222,10 @@
               <i class="fa-solid fa-robot" style="color: #ffffff"></i>
               <span>Computer</span>
             </div>
-            <div class="oppo-box opponent-custom" data-opponent="friend">
+            <div
+              class="oppo-box opponent-custom disabled"
+              data-opponent="friend"
+            >
               <i class="fa-solid fa-user-group" style="color: #ffffff"></i>
               <span>Friend</span>
             </div>
@@ -238,6 +253,25 @@
       </p>
     </footer>
     <!-- Footer End -->
+
+    <!-- MODAL LANDING BEGIN -->
+    <div class="modal-landing-outer">
+      <div class="modal-landing-inner">
+        <div class="modal-landing-heading">
+          <h1>RPS</h1>
+          <p>The Underdog Edition</p>
+        </div>
+        <div class="modal-landing-cta no-select">
+          <button class="modal-landing-btn button-30" role="button">
+            Play as Guest
+          </button>
+          <button class="modal-landing-btn button-30 disabled">
+            Login/Singup
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL LANDING END -->
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
