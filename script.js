@@ -1,3 +1,4 @@
+const gameName = document.querySelector(".game-name");
 const defaultModalBox = document.querySelector(".default-home-modal");
 const defaultModalContain = document.querySelector(".home-modal-wrapper");
 const newGameBtn = document.querySelector(".new-game");
@@ -12,6 +13,12 @@ const opponentThinking = document.querySelector(".para");
 const rightHandBox = document.querySelector(".right-hand-wrapper");
 const scoreBoardBox = document.querySelector(".score-board-wrapper");
 const currentRoundResult = document.querySelector(".current-round-result-show");
+
+// SHOW DEFAULT SCREEN ON LOGO CLICK
+gameName.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("home loaded");
+});
 
 // ==PLAYER SCORE DISPLAY===
 const player1ScoreDisplay = document.querySelector(".player2-score");
@@ -171,6 +178,12 @@ const startGame = function ({ rounds, opponent }) {
   currentRoundResult.innerHTML = "";
   opponentThinking.innerHTML = "";
 
+  // Reset scoreboar size
+  gsap.to(currentRoundResult.closest(".score-board-wrapper"), {
+    scale: 1,
+    transformOrigin: "center center",
+  });
+
   gameBackground.style.background = `url("./Assets/bg.jpg")`;
   gameBackground.style.backgroundPosition = "center center";
   gameBackground.style.backgroundSize = "cover";
@@ -244,14 +257,14 @@ function playRound(userChoice) {
     if (currentRound > numberOfRounds) {
       setTimeout(() => {
         showGameResult();
-      }, 1000);
+      }, 100);
     } else {
       // Enable buttons for next round
       setTimeout(() => {
         enableChoiceButtons();
       }, 50);
     }
-  }, 500);
+  }, 400);
 }
 
 // Add this function to show final game results
@@ -266,7 +279,18 @@ function showGameResult() {
     finalMessage = `🤝 It's a Tie! (${computerScore}-${userScore})`;
   }
 
-  currentRoundResult.innerHTML = finalMessage;
+  const parentBox = currentRoundResult.closest(".score-board-wrapper");
+
+  // Keep buttons disabled
+  disableChoiceButtons();
+
+  // Animate parent box to center & enlarge
+  gsap.to(parentBox, {
+    scale: 1.5,
+    duration: 0.25,
+    transformOrigin: "center center",
+    ease: "power1.out",
+  });
 
   // Keep buttons disabled after game ends
   disableChoiceButtons();

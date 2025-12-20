@@ -21,14 +21,14 @@
             Rock Paper Scissors
           </div>
 
-          <div class="game-options">
+          <div class="game-options no-select">
             <button class="game-btn new-game">New Game</button>
             <button class="game-btn continue-game">Continue</button>
             <button class="game-btn game-history">History</button>
           </div>
         </div>
 
-        <div class="game-settings">
+        <div class="game-settings no-select">
           <button class="game-settings-btn">
             <i class="fa-solid fa-user" style="color: #ffffff"></i
             ><span class="gs-width-fixed"> Profile </span>
@@ -41,7 +41,7 @@
       </div>
 
       <!-- Menu to select R,P,S -->
-      <div class="selection-option" style="display: none">
+      <div class="selection-option no-select" style="display: none">
         <button onclick="playSound();" class="btn" data-value="0">
           <i class="fa-solid fa-hand-back-fist" style="color: #ffffff"></i>
           <span class="w-text">Rock</span>
@@ -62,7 +62,7 @@
       <!-- Hand Images -->
       <div class="hand-wrapper">
         <div class="left-hand-wrapper" style="display: none">
-          <div class="left-player-info">
+          <div class="left-player-info no-select">
             <div class="user-icon-profile">
               <img
                 src="./Assets/avatar/nova.png"
@@ -76,7 +76,7 @@
               <p>SiGMA</p>
             </div>
           </div>
-          <div class="lhand">
+          <div class="lhand no-select">
             <img
               src="Assets/rock.png"
               alt=""
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div class="right-hand-wrapper" style="display: none">
-          <div class="left-player-info right-player-info">
+          <div class="left-player-info right-player-info no-select">
             <div class="user-icon-profile">
               <img
                 src="./Assets/avatar/sensi.png"
@@ -106,7 +106,7 @@
               <p>SeNSI</p>
             </div>
           </div>
-          <div class="rhand">
+          <div class="rhand no-select">
             <img
               src="Assets/Rrock.png"
               alt=" "
@@ -118,7 +118,7 @@
         </div>
 
         <!-- SCORE BOARD BEGIN -->
-        <div class="score-board-wrapper" style="display: none">
+        <div class="score-board-wrapper no-select" style="display: none">
           <div class="display-round-result">
             <p class="current-round-result-show">Draw</p>
           </div>
