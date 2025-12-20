@@ -1,99 +1,282 @@
-let rhand = document.querySelector(".rimg");
-let lhand = document.querySelector(".limg");
-let resultText = document.querySelector("#result");
-let para = document.querySelector(".para");
-let p2choiceText = document.querySelector("#p2choice");
-const limages = ["Assets/rock.png", "Assets/paper.png", "Assets/scissors.png"];
-const rimages = [
+const defaultModalBox = document.querySelector(".default-home-modal");
+const defaultModalContain = document.querySelector(".home-modal-wrapper");
+const newGameBtn = document.querySelector(".new-game");
+const gameHistoryBtn = document.querySelector(".game-history");
+const newGameModalBox = document.querySelector(".new-game-modal");
+const newGameModalContain = document.querySelector(".modal-wrapper");
+const historyModalBox = document.querySelector(".history-modal");
+const historyModalContain = document.querySelector(".hisotry-modal-wrapper");
+const gameBackground = document.querySelector(".hand-wrapper");
+const leftHandBox = document.querySelector(".left-hand-wrapper");
+const opponentThinking = document.querySelector(".para");
+const rightHandBox = document.querySelector(".right-hand-wrapper");
+const scoreBoardBox = document.querySelector(".score-board-wrapper");
+const currentRoundResult = document.querySelector(".current-round-result-show");
+
+// ==PLAYER SCORE DISPLAY===
+const player1ScoreDisplay = document.querySelector(".player2-score");
+const player2ScoreDisplay = document.querySelector(".player1-score");
+
+// ===PLAYER CHOICE BTNS===
+const playerChoiceDiv = document.querySelector(".selection-option");
+
+let rightHand = document.querySelector(".rimg");
+let leftHand = document.querySelector(".limg");
+const leftHandImages = [
+  "Assets/rock.png",
+  "Assets/paper.png",
+  "Assets/scissors.png",
+];
+const rightHandImages = [
   "Assets/Rrock.png",
   "Assets/Rpaper.png",
   "Assets/Rscissors.png",
 ];
-let p1Sboard = document.querySelector(".user-score");
-let p2Sboard = document.querySelector(".computer-score");
-let p1Score = 0;
-let p2Score = 0;
-let pressbutton = document.querySelectorAll(".btn"); // FIXED: Declare pressbutton
 
-let index = 0;
-let cycleInterval;
+// NEW Game Button
+newGameBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  openModal(newGameModalBox, newGameModalContain);
+});
 
-pressbutton.forEach((element) => {
-  element.addEventListener("click", (event) => {
-    if (event.currentTarget.disabled) return; // Prevent clicks when disabled
+// NEW GAME MODAL
+// close modal if clicked outside of the content
+newGameModalBox.addEventListener("click", () => {
+  closeModal(newGameModalBox, newGameModalContain);
+});
 
-    playSound(); // Play sound only if button is enabled
+// new game modal content
+newGameModalContain.addEventListener("click", (e) => {
+  e.stopPropagation();
 
-    let btnIndex = Array.from(pressbutton).indexOf(event.currentTarget);
-    playRound(btnIndex);
+  // ===== OPPONENT BUTTONS =====
+  const buttons = Array.from(
+    newGameModalContain.children[1].children[1].children
+  );
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      buttons.forEach((b) => b.classList.remove("oppobox-active"));
+      btn.classList.add("oppobox-active");
+    });
   });
 });
 
-function playRound(player1) {
+// new game modal close btn
+const closeBtn = newGameModalContain.children[2].children[0];
+closeBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  closeModal(newGameModalBox, newGameModalContain);
+});
+
+//new game play btn
+const playGameBtn = newGameModalContain.querySelector(".msg-start");
+playGameBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  // Get selected rounds
+  const selectedRound = newGameModalContain.querySelector(
+    'input[name="rounds"]:checked'
+  ).value;
+
+  //Get selected opponent
+  const selectedOpponentBox = newGameModalContain.querySelector(
+    ".oppo-box.oppobox-active"
+  );
+
+  const opponent = selectedOpponentBox
+    ? selectedOpponentBox.dataset.opponent
+    : "computer"; // default fallback
+
+  // close modal
+  closeModal(newGameModalBox, newGameModalContain);
+
+  startGame({ rounds: selectedRound, opponent });
+});
+
+// HISTORY MODAL
+gameHistoryBtn.addEventListener("click", () => {
+  historyModalBox.style.display = "block";
+});
+
+// FUNCTIONS
+// ===OPEN MODAL===
+const openModal = (overlay, content, display = "flex") => {
+  overlay.style.display = display;
+
+  gsap.fromTo(
+    content,
+    {
+      scale: 0.5,
+      opacity: 0,
+      y: 50,
+      rotationX: -15,
+      transformPerspective: 1000,
+    },
+    {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      rotationX: 0,
+      duration: 0.3,
+      ease: "back.out(1.7)",
+    }
+  );
+};
+
+// ===CLOSE MODAL===
+const closeModal = (overlay, content) => {
+  gsap.to(content, {
+    scale: 0.7,
+    opacity: 0,
+    y: 40,
+    duration: 0.1,
+    ease: "power2.in",
+    onComplete: () => {
+      overlay.style.display = "none";
+
+      // reset for next open
+      gsap.set(content, { scale: 1, opacity: 1, y: 0 });
+    },
+  });
+};
+
+// ===START GAME===
+let userScore = 0;
+let computerScore = 0;
+let currentRound = 1;
+let numberOfRounds = 3; // default
+let index = 0;
+let cycleInterval;
+
+Array.from(playerChoiceDiv.children).forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    playRound(Number(btn.dataset.value));
+  });
+});
+
+const startGame = function ({ rounds, opponent }) {
+  // Reset game state
+  userScore = 0;
+  computerScore = 0;
+  currentRound = 1;
+  numberOfRounds = Number(rounds); // Set it here from the parameter
+
+  // Reset displays
+  player1ScoreDisplay.innerHTML = 0;
+  player2ScoreDisplay.innerHTML = 0;
+  currentRoundResult.innerHTML = "";
+  opponentThinking.innerHTML = "";
+
+  gameBackground.style.background = `url("./Assets/bg.jpg")`;
+  gameBackground.style.backgroundPosition = "center center";
+  gameBackground.style.backgroundSize = "cover";
+  gameBackground.style.backgroundRepeat = "no-repeat";
+
+  closeModal(defaultModalBox, defaultModalContain);
+  closeModal(historyModalBox, historyModalContain);
+  playerChoiceDiv.style.display = "flex";
+  leftHandBox.style.display = "flex";
+  rightHandBox.style.display = "flex";
+  scoreBoardBox.style.display = "flex";
+
+  // Choice Buttons are enabled
+  enableChoiceButtons();
+};
+
+function playRound(userChoice) {
+  // Check if game is already finished
+  if (currentRound > numberOfRounds) {
+    return; // Don't allow more plays
+  }
+
   let choice = ["Rock", "Paper", "Scissors"];
-  para.innerHTML = "Opponent is choosing...";
-  p2choiceText.innerHTML = ""; // FIXED: Use innerHTML instead of .text
+  disableChoiceButtons();
 
-  // Disable all buttons to prevent multiple clicks
-  pressbutton.forEach((btn) => (btn.disabled = true));
+  // Show player 1 choice with hand animation
+  rightHand.src = rightHandImages[userChoice];
+  gsap.fromTo(
+    rightHand,
+    {
+      opacity: 0,
+    },
+    {
+      duration: 0.5,
+      opacity: 1,
+      ease: "power1.inOut",
+      transformOrigin: "right center",
+    }
+  );
 
-  var cstop = cycleImages();
+  var cycleStop = cycleImages();
 
   setTimeout(() => {
-    rhand.src = rimages[player1]; // Show player choice
-    clearInterval(cstop);
+    clearInterval(cycleStop);
 
-    let player2 = pThink();
-    let determine = roundGameCheck(player1, player2);
+    let computerChoice = computerThink();
 
-    para.innerHTML = `Opponent is choosing a ${choice[player2]}`;
+    opponentThinking.innerHTML = `Opponent chose a ${choice[computerChoice]}`;
 
-    let finalRes = winCheck(player1, player2);
+    let finalResult = winCheck(userChoice, computerChoice);
 
-    if (finalRes === null) {
-      resultText.innerHTML = `Draw`;
-    } else if (finalRes === true) {
-      p1Score++;
-      resultText.innerHTML = `You Win`;
+    if (finalResult === null) {
+      currentRoundResult.innerHTML = "Draw";
+    } else if (finalResult === true) {
+      currentRoundResult.innerHTML = "You Win";
+      userScore++;
     } else {
-      p2Score++;
-      resultText.innerHTML = `You Lose`;
+      currentRoundResult.innerHTML = "You Lose";
+      computerScore++;
     }
-
     // Update score display
-    p1Sboard.innerHTML = p1Score;
-    p2Sboard.innerHTML = p2Score;
+    player1ScoreDisplay.innerHTML = userScore;
+    player2ScoreDisplay.innerHTML = computerScore;
 
-    p2choiceText.innerHTML = `${choice[player2]}`;
-    gsap.fromTo(
-      rhand,
-      {
-        opacity: 0,
-      },
-      {
-        duration: 0.5,
-        opacity: 1,
-        ease: "power1.inOut",
-        transformOrigin: "right center",
-      }
-    );
-    lhand.src = limages[player2];
+    leftHand.src = leftHandImages[computerChoice];
 
-    // Enable buttons after round finishes
-    setTimeout(() => {
-      pressbutton.forEach((btn) => {
-        btn.disabled = false;
-        btn.style.opacity = "1";
-      });
-    }, 1000);
-  }, 2000);
+    // Increment the round counter
+    currentRound++;
+
+    // Check if game is finished
+    if (currentRound > numberOfRounds) {
+      setTimeout(() => {
+        showGameResult();
+      }, 1000);
+    } else {
+      // Enable buttons for next round
+      setTimeout(() => {
+        enableChoiceButtons();
+      }, 50);
+    }
+  }, 500);
 }
 
-function pThink() {
+// Add this function to show final game results
+function showGameResult() {
+  let finalMessage = "";
+
+  if (userScore > computerScore) {
+    finalMessage = `🎉 You Won the Game! (${computerScore}-${userScore})`;
+  } else if (computerScore > userScore) {
+    finalMessage = `😔 You Lost the Game! (${computerScore}-${userScore})`;
+  } else {
+    finalMessage = `🤝 It's a Tie! (${computerScore}-${userScore})`;
+  }
+
+  currentRoundResult.innerHTML = finalMessage;
+
+  // Keep buttons disabled after game ends
+  disableChoiceButtons();
+}
+
+function computerThink() {
   var randomIndex = Math.floor(Math.random() * 3);
-  lhand.src = limages[randomIndex];
+  leftHand.src = leftHandImages[randomIndex];
   gsap.fromTo(
-    lhand,
+    leftHand,
     { opacity: 0.9 },
     {
       opacity: 1,
@@ -105,21 +288,17 @@ function pThink() {
   return randomIndex;
 }
 
-function winCheck(x, y) {
-  return x === y ? null : x === (y + 1) % 3 ? true : false;
-}
-
-function roundGameCheck(player_1, player_2) {
-  if (player_1 === player_2) return null;
-  if (player_1 === 3 && player_2 !== 3) return true;
-  else return false;
+function winCheck(user, computer) {
+  if (user === computer) return null;
+  return (user - computer + 3) % 3 === 1;
 }
 
 function cycleImages() {
   if (cycleInterval) clearInterval(cycleInterval);
+
   cycleInterval = setInterval(function () {
     gsap.fromTo(
-      lhand,
+      leftHand,
       {
         opacity: 0,
       },
@@ -129,8 +308,8 @@ function cycleImages() {
         transformOrigin: "left center",
       }
     );
-    index = (index + 1) % limages.length;
-    lhand.src = limages[index];
+    index = (index + 1) % leftHandImages.length;
+    leftHand.src = leftHandImages[index];
   }, 120);
   return cycleInterval;
 }
@@ -138,4 +317,18 @@ function cycleImages() {
 function playSound() {
   let audio = new Audio("Assets/Sounds/start.mp3");
   audio.play();
+}
+
+function disableChoiceButtons() {
+  Array.from(playerChoiceDiv.children).forEach((btn) => {
+    btn.disabled = true;
+    btn.style.opacity = 0.5; // optional visual feedback
+  });
+}
+
+function enableChoiceButtons() {
+  Array.from(playerChoiceDiv.children).forEach((btn) => {
+    btn.disabled = false;
+    btn.style.opacity = 1;
+  });
 }

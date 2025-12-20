@@ -8,16 +8,49 @@
   </head>
   <body>
     <div class="container">
-      <div class="wrapper">
-        <button onclick="playSound(); playRound(0)" class="btn">
+      <!-- Left game action menu -->
+      <div class="menu-container">
+        <div class="glow-box"></div>
+        <div class="menu-collapse-btn">
+          <i class="fa-solid fa-angles-up fa-rotate-90"></i>
+        </div>
+
+        <div class="menu-top">
+          <div class="game-name">
+            <span class="game-special-name">RPS</span> <br />
+            Rock Paper Scissors
+          </div>
+
+          <div class="game-options">
+            <button class="game-btn new-game">New Game</button>
+            <button class="game-btn continue-game">Continue</button>
+            <button class="game-btn game-history">History</button>
+          </div>
+        </div>
+
+        <div class="game-settings">
+          <button class="game-settings-btn">
+            <i class="fa-solid fa-user" style="color: #ffffff"></i
+            ><span class="gs-width-fixed"> Profile </span>
+          </button>
+          <button class="game-settings-btn">
+            <i class="fa-solid fa-gear" style="color: #ffffff"></i
+            ><span class="gs-width-fixed"> Settings </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Menu to select R,P,S -->
+      <div class="selection-option" style="display: none">
+        <button onclick="playSound();" class="btn" data-value="0">
           <i class="fa-solid fa-hand-back-fist" style="color: #ffffff"></i>
           <span class="w-text">Rock</span>
         </button>
-        <button onclick="playSound(); playRound(1)" class="btn">
+        <button onclick="playSound();" class="btn" data-value="1">
           <i class="fa-solid fa-hand" style="color: #ffffff"></i>
           <span class="w-text">Paper</span>
         </button>
-        <button onclick="playSound(); playRound(2)" class="btn">
+        <button onclick="playSound();" class="btn" data-value="2">
           <i
             class="fa-solid fa-hand-scissors fa-rotate-90"
             style="color: #ffffff"
@@ -26,25 +59,22 @@
         </button>
       </div>
 
-      <div class="display_box">
-        <div class="result-wrap">
-          <h1 id="result">Start the Game</h1>
-        </div>
-        <div class="score-board">
-          <div class="score-box-container">
-            <span class="computer-score">0</span>
-          </div>
-          <div class="score-box-container">
-            <span class="user-score">0</span>
-          </div>
-        </div>
-      </div>
-
+      <!-- Hand Images -->
       <div class="hand-wrapper">
-        <div class="left-hand-wrapper">
+        <div class="left-hand-wrapper" style="display: none">
           <div class="left-player-info">
-            <div class="status-pulse"></div>
-            Computer
+            <div class="user-icon-profile">
+              <img
+                src="./Assets/avatar/nova.png"
+                alt="pic"
+                draggable="false"
+                loading="lazy"
+              />
+            </div>
+            <div class="game-user-info">
+              <h1 class="game-user-info-heading">ATIT69</h1>
+              <p>SiGMA</p>
+            </div>
           </div>
           <div class="lhand">
             <img
@@ -52,6 +82,7 @@
               alt=""
               class="limg lmove"
               draggable="false"
+              loading="lazy"
             />
             <div class="linfo">
               <p class="para">
@@ -60,10 +91,20 @@
             </div>
           </div>
         </div>
-        <div class="right-hand-wrapper">
+        <div class="right-hand-wrapper" style="display: none">
           <div class="left-player-info right-player-info">
-            <div class="status-pulse"></div>
-            You
+            <div class="user-icon-profile">
+              <img
+                src="./Assets/avatar/sensi.png"
+                alt="pic"
+                draggable="false"
+                loading="lazy"
+              />
+            </div>
+            <div class="game-user-info">
+              <h1 class="game-user-info-heading">Ishan21</h1>
+              <p>SeNSI</p>
+            </div>
           </div>
           <div class="rhand">
             <img
@@ -71,12 +112,120 @@
               alt=" "
               class="rimg"
               draggable="false"
+              loading="lazy"
             />
           </div>
         </div>
+
+        <!-- SCORE BOARD BEGIN -->
+        <div class="score-board-wrapper" style="display: none">
+          <div class="display-round-result">
+            <p class="current-round-result-show">Draw</p>
+          </div>
+          <div class="display-round-player-result">
+            <div class="score-btn player1-score">0</div>
+            <div class="score-btn player2-score">0</div>
+          </div>
+        </div>
+        <!-- SCORE BOARD END -->
+
+        <!-- DEFAULT HOME SCREEN BEGIN -->
+        <div class="default-home-modal" style="display: flex">
+          <div class="home-modal-wrapper">
+            <div class="default-home-icon">
+              <img
+                src="Assets/homeIcon.png"
+                alt="RPS Icon"
+                loading="lazy"
+                draggable="false"
+              />
+            </div>
+            <div class="default-home-message">
+              <h1 class="default-primary">READY ?</h1>
+              <p>Start your game and test your skills!</p>
+            </div>
+          </div>
+        </div>
+        <!-- DEFAULT HOME SCREEN END -->
+
+        <!-- HISTORY MODAL BEGIN -->
+        <div class="history-modal" style="display: none">
+          <div class="hisotry-modal-wrapper">
+            <div class="history-modal-head"><h1>History</h1></div>
+
+            <div class="history-logs">
+              <div class="history-lists">
+                <div class="game-win-lose">
+                  <div class="game-result-icon">
+                    <img src="" alt="game image" />
+                  </div>
+                  <div class="game-opponent">
+                    <div class="game-final-Decison">VICTORY</div>
+                    <div class="game-final-opponent-name">
+                      <span>vs.</span> <span>Computer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="game-win-lose-score">
+                  <span>3</span>- <span>1</span>
+                </div>
+                <div class="game-play-duration">
+                  <span>1min 2sec</span>
+                </div>
+                <div class="game-date-played">1hrs Ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- HISTORY MODAL END -->
       </div>
     </div>
-    <footer>
+
+    <!-- MAIN MENU MODAL BEGIN -->
+    <div class="modal-main-menu"></div>
+    <!-- MAIN MENU MODAL END -->
+
+    <!-- NEW GAME MODAL BEGIN -->
+    <div class="modal modal-container new-game-modal" style="display: none">
+      <div class="modal-wrapper">
+        <div class="modal-game-rounds">
+          <h3>Rounds</h3>
+          <div class="modal-wrapper-btns">
+            <form action="" class="radio-group">
+              <input type="radio" name="rounds" id="r3" value="3" checked />
+              <label for="r3">3</label>
+              <input type="radio" name="rounds" id="r5" value="5" />
+              <label for="r5">5</label>
+              <input type="radio" name="rounds" id="r7" value="7" />
+              <label for="r7">7</label>
+              <input type="radio" name="rounds" id="r10" value="10" />
+              <label for="r10">10</label>
+            </form>
+          </div>
+        </div>
+        <div class="modal-opponent">
+          <h3>Opponent</h3>
+          <div class="modal-opponent-wrapper">
+            <div class="oppo-box opponent-computer" data-opponent="computer">
+              <i class="fa-solid fa-robot" style="color: #ffffff"></i>
+              <span>Computer</span>
+            </div>
+            <div class="oppo-box opponent-custom" data-opponent="friend">
+              <i class="fa-solid fa-user-group" style="color: #ffffff"></i>
+              <span>Friend</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-start-game">
+          <button class="modal-start-game-btn msg-cancel">Cancel</button>
+          <button class="modal-start-game-btn msg-start">Start</button>
+        </div>
+      </div>
+    </div>
+    <!-- NEW GAME MODAL END -->
+
+    <!-- Footer Begin -->
+    <footer style="display: none">
       <p>
         Copyright © 2025 by,
         <a href="https://github.com/heykhem" target="_blank" class="social"
@@ -88,6 +237,7 @@
         </a>
       </p>
     </footer>
+    <!-- Footer End -->
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
