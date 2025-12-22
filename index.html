@@ -51,15 +51,15 @@
 
       <!-- Menu to select R,P,S -->
       <div class="selection-option no-select" style="display: none">
-        <button onclick="playSound();" class="btn" data-value="0">
+        <button class="btn" data-value="0">
           <i class="fa-solid fa-hand-back-fist" style="color: #ffffff"></i>
           <span class="w-text">Rock</span>
         </button>
-        <button onclick="playSound();" class="btn" data-value="1">
+        <button class="btn" data-value="1">
           <i class="fa-solid fa-hand" style="color: #ffffff"></i>
           <span class="w-text">Paper</span>
         </button>
-        <button onclick="playSound();" class="btn" data-value="2">
+        <button class="btn" data-value="2">
           <i
             class="fa-solid fa-hand-scissors fa-rotate-90"
             style="color: #ffffff"
@@ -218,17 +218,29 @@
         <div class="modal-opponent">
           <h3>Opponent</h3>
           <div class="modal-opponent-wrapper">
-            <div class="oppo-box opponent-computer" data-opponent="computer">
-              <i class="fa-solid fa-robot" style="color: #ffffff"></i>
-              <span>Computer</span>
-            </div>
-            <div
-              class="oppo-box opponent-custom disabled"
-              data-opponent="friend"
-            >
-              <i class="fa-solid fa-user-group" style="color: #ffffff"></i>
-              <span>Friend</span>
-            </div>
+            <form action="" class="opponent-radio-group">
+              <input
+                type="radio"
+                name="opponent"
+                id="computer"
+                data-opponent="computer"
+                checked
+              />
+              <label for="computer" class="oppo-box">
+                <i class="fa-solid fa-robot" style="color: #ffffff"> </i>
+                <span>Computer</span>
+              </label>
+              <input
+                type="radio"
+                name="opponent"
+                id="friend"
+                data-opponent="friend"
+              />
+              <label for="friend" class="oppo-box opponent-custom disabled">
+                <i class="fa-solid fa-user-group" style="color: #ffffff"></i>
+                <span>Friend</span>
+              </label>
+            </form>
           </div>
         </div>
         <div class="modal-start-game">
@@ -255,14 +267,14 @@
     <!-- Footer End -->
 
     <!-- MODAL LANDING BEGIN -->
-    <div class="modal-landing-outer">
+    <div class="modal-landing-outer display-none">
       <div class="modal-landing-inner">
         <div class="modal-landing-heading">
           <h1>RPS</h1>
           <p>The Underdog Edition</p>
         </div>
         <div class="modal-landing-cta no-select">
-          <button class="modal-landing-btn button-30" role="button">
+          <button class="modal-landing-btn modal-guest-btn" role="button">
             Play as Guest
           </button>
           <button class="modal-landing-btn button-30 disabled">
@@ -272,6 +284,73 @@
       </div>
     </div>
     <!-- MODAL LANDING END -->
+
+    <!-- MODAL LOGIN AND SIGNUP BEGIN -->
+    <div class="modal-login-singup-outer">
+      <div class="modal-login-signup-inner">
+        <div class="login-signup-top-menu">
+          <button class="form-active">Login</button>
+          <button class="">Sign UP</button>
+        </div>
+
+        <!-- login menu -->
+        <div class="login-menu-wrapper">
+          <form action="" class="">
+            <div class="input-group">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="username or email address"
+              />
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" id="password" />
+            </div>
+            <div class="input-group">
+              <button type="submit" class="modal-login-btn">Login</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Signup menu -->
+        <div class="signin-menu-wrapper">
+          <form action="">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                name="username"
+                id="email"
+                placeholder="Enter email address"
+              />
+            </div>
+            <div class="input-group">
+              <label for="signup-password">Password</label>
+              <input
+                type="password"
+                name="signup-password"
+                id="signup-password"
+              />
+            </div>
+            <div class="input-box terms-box">
+              <input
+                type="checkbox"
+                name="terms-and-condition"
+                id="terms-and-conditions"
+              />
+              <label for="terms-and-conditions">I agree the terms</label>
+            </div>
+            <div class="input-box">
+              <button class="modal-create-btn">Create Account</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL LOGIN AND SIGNUP END-->
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
@@ -283,6 +362,7 @@
       src="https://kit.fontawesome.com/07b482046c.js"
       crossorigin="anonymous"
     ></script>
-    <script src="script.js"></script>
+    <!-- Main entry -->
+    <script type="module" src="./script.js"></script>
   </body>
 </html>

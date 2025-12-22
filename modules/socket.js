@@ -1,14 +1,9 @@
-import { io } from "https://cdn.socket.io/4.7.2/socket.io.esm.min.js";
-export const socket = io("http://localhost:3000");
+import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 
-export function joinRoom(roomId) {
-  socket.emit("joinGame", roomId);
-}
+export function connectSocket(userId) {
+  const socket = io("http://localhost:9000", {
+    auth: { userId },
+  });
 
-export function sendMove(roomId, move) {
-  socket.emit("playerMove", { roomId, move });
-}
-
-export function onOpponentMove(callback) {
-  socket.on("opponentMove", callback);
+  return socket;
 }

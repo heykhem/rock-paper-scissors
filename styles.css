@@ -44,7 +44,6 @@ body {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  display: none;
 }
 
 .modal-landing-heading {
@@ -560,6 +559,16 @@ footer p {
   margin-top: 0.6rem;
 }
 
+.opponent-radio-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.opponent-radio-group input {
+  display: none;
+}
+
 .oppo-box {
   padding: 10px 16px;
   border-radius: 6px;
@@ -586,6 +595,14 @@ footer p {
 .oppobox-active {
   background-color: #4f8cff;
   box-shadow: 0 0 0 4px rgba(79, 140, 255, 0.25);
+}
+
+/* Checked */
+.opponent-radio-group input:checked + label {
+  background: #4f8cff;
+  color: #ffffff;
+  border-color: #4f8cff;
+  box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.25);
 }
 
 .modal-start-game {
@@ -778,3 +795,105 @@ footer p {
   justify-content: center;
   background-color: #d7d7d7;
 }
+
+/* LOGIN SIGNUP BEGIN */
+
+.modal-login-singup-outer {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-login-signup-inner {
+  width: 450px;
+  padding: 40px;
+  background-color: #262626;
+  border: 1.2px solid #dddddd23;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.login-signup-top-menu {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 500px;
+  gap: 20px;
+}
+
+.login-signup-top-menu button {
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: #fff;
+  text-transform: uppercase;
+  opacity: 20%;
+  letter-spacing: 0.8px;
+}
+
+/* Active Staus */
+.form-active {
+  opacity: 100% !important;
+}
+
+.login-menu-wrapper form {
+  flex-direction: column;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-style: italic;
+  opacity: 60%;
+  letter-spacing: 0.4px;
+  margin: 1rem 0;
+}
+
+.input-group input {
+  color: #fff;
+  background-color: transparent;
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.352);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+.modal-login-btn,
+.modal-create-btn {
+  font-size: 1rem;
+  padding: 8px 12px;
+  margin-top: 1rem;
+}
+
+.signin-menu-wrapper {
+  display: none;
+}
+
+.terms-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* LOGIN SIGNUP END */
