@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rock Paper Scissor Game</title>
+    <title>(RPS) Rock Paper Scissor Game</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -23,7 +23,7 @@
 
           <div class="game-options no-select">
             <button class="game-btn new-game">New Game</button>
-            <button class="game-btn continue-game display-none">
+            <button class="game-btn game-continue display-none">
               Continue
             </button>
             <button class="game-btn game-history display-none">History</button>
@@ -44,6 +44,9 @@
             <p class="show-alert-about-progress">SIGN UP TO SAVE PROGRESS</p>
             <button class="game-login-btn">
               <span> LOGIN /REGISTER </span>
+            </button>
+            <button class="game-logout-btn display-none">
+              <span> LOGOUT </span>
             </button>
           </div>
         </div>
@@ -190,10 +193,6 @@
       </div>
     </div>
 
-    <!-- MAIN MENU MODAL BEGIN -->
-    <div class="modal-main-menu"></div>
-    <!-- MAIN MENU MODAL END -->
-
     <!-- NEW GAME MODAL BEGIN -->
     <div
       class="modal modal-container new-game-modal no-select"
@@ -236,7 +235,10 @@
                 id="friend"
                 data-opponent="friend"
               />
-              <label for="friend" class="oppo-box opponent-custom disabled">
+              <label
+                for="friend"
+                class="oppo-box opponent-custom disabled play-with-friend"
+              >
                 <i class="fa-solid fa-user-group" style="color: #ffffff"></i>
                 <span>Friend</span>
               </label>
@@ -251,21 +253,6 @@
     </div>
     <!-- NEW GAME MODAL END -->
 
-    <!-- Footer Begin -->
-    <footer style="display: none">
-      <p>
-        Copyright © 2025 by,
-        <a href="https://github.com/heykhem" target="_blank" class="social"
-          >Khem Raj Budhathoki
-        </a>
-        &
-        <a href="https://github.com/ishan2021" target="_blank" class="social"
-          >Ishan Ghimire
-        </a>
-      </p>
-    </footer>
-    <!-- Footer End -->
-
     <!-- MODAL LANDING BEGIN -->
     <div class="modal-landing-outer display-none">
       <div class="modal-landing-inner">
@@ -277,9 +264,7 @@
           <button class="modal-landing-btn modal-guest-btn" role="button">
             Play as Guest
           </button>
-          <button class="modal-landing-btn button-30 disabled">
-            Login/Singup
-          </button>
+          <button class="modal-landing-btn disabled">Login/Singup</button>
         </div>
       </div>
     </div>
@@ -319,6 +304,15 @@
         <div class="signin-menu-wrapper">
           <form action="">
             <div class="input-group">
+              <label for="fName">Full Name</label>
+              <input
+                type="text"
+                name="fullName"
+                id="fName"
+                placeholder="Enter Full Name"
+              />
+            </div>
+            <div class="input-group">
               <label for="email">Email</label>
               <input
                 type="email"
@@ -335,14 +329,7 @@
                 id="signup-password"
               />
             </div>
-            <div class="input-box terms-box">
-              <input
-                type="checkbox"
-                name="terms-and-condition"
-                id="terms-and-conditions"
-              />
-              <label for="terms-and-conditions">I agree the terms</label>
-            </div>
+
             <div class="input-box">
               <button class="modal-create-btn">Create Account</button>
             </div>

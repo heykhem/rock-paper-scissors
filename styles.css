@@ -203,6 +203,7 @@ body {
 }
 
 .game-login-user-btn {
+  width: 100%;
   background-color: #262626;
   padding: 10px;
   border-radius: 4px;
@@ -246,7 +247,8 @@ body {
   opacity: 50%;
 }
 
-.game-login-btn {
+.game-login-btn,
+.game-logout-btn {
   margin-top: 0.8rem;
   display: flex;
   align-items: center;
@@ -417,33 +419,6 @@ img {
   font-size: 14px;
   color: #fff;
   opacity: 80%;
-}
-
-footer {
-  position: absolute;
-  color: #ffffff58;
-  left: 50%;
-  bottom: 10px;
-  transform: translateX(-50%);
-  font-size: 12px;
-  transition: all 0.3s ease-in-out;
-}
-
-footer p {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.social {
-  color: inherit;
-  text-decoration: none;
-  padding: 2px 4px;
-  transition: all 0.3s ease-in-out;
-}
-
-.social:hover {
-  text-decoration: underline;
 }
 
 /* MODAL CSS */
@@ -884,16 +859,6 @@ footer p {
 
 .signin-menu-wrapper {
   display: none;
-}
-
-.terms-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
 }
 
 /* LOGIN SIGNUP END */

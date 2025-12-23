@@ -1,6 +1,7 @@
 "use-strict";
 
 import * as Game from "./game.js";
+import * as Auth from "./auth.js";
 
 // === DOM ELEMENTS ===
 
@@ -20,6 +21,15 @@ const opponentThinking = document.querySelector(".para");
 const rightHandBox = document.querySelector(".right-hand-wrapper");
 const scoreBoardBox = document.querySelector(".score-board-wrapper");
 const currentRoundResult = document.querySelector(".current-round-result-show");
+
+//  === GAME OPTIONS ===
+const btnContinue = document.querySelector(".game-continue");
+const btnHistory = document.querySelector(".game-history");
+const btnPlayFriend = document.querySelector(".play-with-friend");
+const warnProgress = document.querySelector(".show-alert-about-progress");
+
+// === USER PROFILE ===
+const setUsername = document.querySelector(".guest-user-username");
 
 // === PLAYER SCORE DISPLAY ===
 const player1ScoreDisplay = document.querySelector(".player2-score");
@@ -338,7 +348,8 @@ function playSound() {
 const authModalBox = document.querySelector(".modal-login-singup-outer");
 const authModalContain = document.querySelector(".modal-login-signup-inner");
 
-const btnAuth = document.querySelector(".game-login-btn");
+const btnLoginAuth = document.querySelector(".game-login-btn");
+const btnLogoutAuth = document.querySelector(".game-logout-btn");
 const tabButtons = Array.from(
   document.querySelectorAll(".login-signup-top-menu button")
 );
@@ -351,7 +362,7 @@ const signupMenu = document.querySelector(".signin-menu-wrapper");
 const loginForm = loginMenu.querySelector("form");
 const signupForm = signupMenu.querySelector("form");
 
-btnAuth.addEventListener("click", () => {
+btnLoginAuth.addEventListener("click", () => {
   authModalBox.style.display = "flex";
 });
 
@@ -385,39 +396,79 @@ tabButtons.forEach((btn, index) => {
 });
 
 // Login form submit
-loginForm.addEventListener("submit", (e) => {
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault(); // Prevent form from refreshing page
 
-  const username = document.getElementById("username").value;
+  const email = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  console.log("Login Data:");
-  console.log("Username:", username);
-  console.log("Password:", password);
+  try {
+    const user = await Auth.login(email, password);
+    closeAuthModal();
+    showUserUI(user);
+  } catch (err) {
+    alert(err.message);
+  }
 
   // Close modal
-  authModalBox.style.display = "none";
+  closeAuthModal();
 
   // Clear form
   loginForm.reset();
 });
 
 // Signup form submit
-signupForm.addEventListener("submit", (e) => {
+signupForm.addEventListener("submit", async (e) => {
   e.preventDefault(); // Prevent form from refreshing page
 
   const email = document.getElementById("email").value;
   const signupPassword = document.getElementById("signup-password").value;
-  const termsAccepted = document.getElementById("terms-and-conditions").checked;
 
-  console.log("Signup Data:");
-  console.log("Email:", email);
-  console.log("Password:", signupPassword);
-  console.log("Terms Accepted:", termsAccepted);
-
-  // Close modal
-  authModalBox.style.display = "none";
+  try {
+    const user = await Auth.signup(email, signupPassword);
+    closeAuthModal();
+    showUserUI(user);
+  } catch (err) {
+    alert(err.message);
+  }
 
   // Clear form
   signupForm.reset();
 });
+
+// AUTH CODE
+export function showGuestUI() {
+  landingModalBox.classList.remove("display-none");
+  btnContinue.classList.add("display-none");
+  btnHistory.classList.add("display-none");
+  btnPlayFriend.classList.add("disabled");
+  warnProgress.classList.remove("display-none");
+  btnLoginAuth.classList.remove("display-none");
+  btnLogoutAuth.classList.add("display-none");
+}
+
+export async function showUserUI(user) {
+  const activeUser = Auth.getUser();
+
+  landingModalBox.classList.add("display-none");
+
+  btnContinue.classList.remove("display-none");
+  btnHistory.classList.remove("display-none");
+  btnPlayFriend.classList.remove("disabled");
+  warnProgress.classList.add("display-none");
+  btnLoginAuth.classList.add("display-none");
+  btnLogoutAuth.classList.remove("display-none");
+
+  setUsername.textContent = Auth.getUsername();
+}
+
+export function closeAuthModal() {
+  authModalBox.style.display = "none";
+}
+
+export function openAuthModal() {
+  authModalBox.style.display = "flex";
+}
+
+// LOGOUT USER
+btnLogoutAuth.addEventListener("click", Auth.logout);
