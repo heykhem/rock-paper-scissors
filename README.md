@@ -1,31 +1,34 @@
-# Rock Paper Scissors
+# 🎮 Rock Paper Scissors
 
-[![Live Demo](https://img.shields.io/badge/demo-online-green?style=for-the-badge&logo=github)](https://heykhem.github.io/rock-paper-scissors/)
+[![Live Demo](https://img.shields.io/badge/demo-online-green?style=for-the-badge&logo=github)](https://heykhem.github.io/rock-paper-scissors/)  
 
-A dynamic, interactive Rock Paper Scissors game played against the computer. This project features smooth animations using the GreenSock Animation Platform (GSAP), sound effects, and a realistic "thinking" phase for the opponent.
+A **dynamic and interactive Rock Paper Scissors game** with multiplayer support, smooth animations, real-time score tracking, and Supabase-backed authentication. Play against the computer or challenge your friends in real-time!
 
-## 📸 Game UI
+---
 
-![Game Screenshot](./Assets/newUi.png)
+## 🎬 Demo
 
-> *The interface features animated hands that enter from the sides, a dynamic scoreboard, and interactive controls.*
+![Gameplay Demo](./Assets/newUi.png)  
+> *Animated hands, responsive UI, and smooth transitions make the game engaging and fun.*
+
+---
 
 ## 🌟 Features
 
-* **Interactive Gameplay:** Play the classic game against a randomized computer opponent.
-* **GSAP Animations:** Smooth entrance and exit animations for hand gestures.
-* **Opponent Logic:** The computer simulates a "thinking" phase by cycling through options before revealing its choice.
-* **Score Tracking:** Real-time score updates for both the player and the computer.
-* **Sound Effects:** Audio feedback when interacting with buttons.
-* **Input Locking:** Prevents spamming buttons during the animation phase to ensure game stability.
+### ✅ Core Features
 
-## 🛠️ Technologies Used
+- **Play with Computer:** Classic RPS with a “thinking” AI opponent.  
+- **Play with Friends:** Create or join a room and play in real-time using Socket.IO.  
+- **Login & Signup:** Supabase-powered authentication for persistent profiles.  
+- **Player Profile:** Track your wins, losses, and game history.  
+- **Smooth Animations:** GSAP-powered hand gestures and UI transitions.  
+- **Sound Effects:** Audio feedback on button clicks and game events.  
+- **Input Locking:** Prevents button spamming during animations or turns.  
 
-* **HTML5**
-* **CSS3**
-* **JavaScript (ES6+)**
-* **[GSAP](https://greensock.com/gsap/)** - Used for handling the hand animations and opacity transitions.
+### ⚡ Upcoming Features
 
-## Copyright
+- **Leaderboards:** Global and friends-only ranking system.  
+- **Custom Avatars & Themes:** Personalize your profile and game UI.  
+- **Enhanced Multiplayer:** Matchmaking, chat, and spectator mode.  
 
-Copyright &copy; 2025 Khem Raj Budhathoki
+---

@@ -1,5 +1,5 @@
-import * as UI from "./modules/ui.js";
-import * as Auth from "./modules/auth.js";
+import * as UI from "./ui.js";
+import * as Auth from "./auth.js";
 
 // INIT AUTH ON LOAD
 document.addEventListener("DOMContentLoaded", async () => {
