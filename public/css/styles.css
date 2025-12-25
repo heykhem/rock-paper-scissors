@@ -40,7 +40,7 @@ body {
   justify-content: center;
   background-color: black;
   z-index: 99999;
-  background-image: url("/Assets/landingBg.png");
+  background-image: url("assets/landingBg.png");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -313,8 +313,6 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   overflow: hidden;
-  /* background: url("./Assets/bg.jpg") center center / cover no-repeat; */
-
   position: relative;
 }
 

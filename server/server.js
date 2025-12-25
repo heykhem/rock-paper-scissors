@@ -22,7 +22,7 @@ app.get("/config", (req, res) => {
   });
 });
 
-// SPA fallback (FIXED ✅)
+// SPA fallback
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });

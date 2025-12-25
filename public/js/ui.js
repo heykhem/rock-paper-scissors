@@ -421,16 +421,19 @@ loginForm.addEventListener("submit", async (e) => {
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault(); // Prevent form from refreshing page
 
+  const fullName = document.getElementById("fName").value;
   const email = document.getElementById("email").value;
   const signupPassword = document.getElementById("signup-password").value;
+  const { user, error } = await Auth.signup(fullName, email, signupPassword);
 
-  try {
-    const user = await Auth.signup(email, signupPassword);
-    closeAuthModal();
-    showUserUI(user);
-  } catch (err) {
-    alert(err.message);
+  if (error) {
+    alert(error.message);
+    return;
   }
+
+  alert(`Welcome, ${fullName}! Your account has been created.`);
+  // Redirect to game or profile page
+  // window.location.href = "/";
 
   // Clear form
   signupForm.reset();
@@ -472,3 +475,9 @@ export function openAuthModal() {
 
 // LOGOUT USER
 btnLogoutAuth.addEventListener("click", Auth.logout);
+
+// ===HISTORY MODAL===
+btnHistory.addEventListener("click", (e) => {
+  e.stopPropagation();
+  console.log("History is enabled");
+});

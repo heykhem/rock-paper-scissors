@@ -3,6 +3,14 @@ import * as UI from "./ui.js";
 
 let currentUser = null;
 
+/**
+ * Sign up a new user with full name, email, and password
+ * @param {string} fullName - Full name of the user
+ * @param {string} email - User email
+ * @param {string} password - User password
+ * @returns {object} - { user, error }
+ */
+
 // LOGIN
 export async function login(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -17,22 +25,40 @@ export async function login(email, password) {
 }
 
 // SIGNUP
-export async function signup(email, password) {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { username }, // store it here
-    },
-  });
+export async function signup(fullName, email, password) {
+  try {
+    // 1️⃣ Sign up in Supabase Auth
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-  if (error) throw error;
+    if (error) {
+      return { user: null, error };
+    }
 
-  currentUser = data.user;
-  console.log(currentUser);
-  return currentUser;
+    // 2️⃣ Generate default username from full name
+    const username = fullName.trim().split(" ")[0].toLowerCase();
+
+    // 3️⃣ Insert user profile into `profiles` table
+    const { error: profileError } = await supabase.from("profiles").insert([
+      {
+        id: data.user.id, // Link to auth.users.id
+        full_name: fullName,
+        username: username,
+        avatar_url: null, // You can assign a default avatar here
+      },
+    ]);
+
+    if (profileError) {
+      return { user: null, error: profileError };
+    }
+
+    return { user: data.user, error: null };
+  } catch (err) {
+    return { user: null, error: err };
+  }
 }
-
 // LOGOUT
 export async function logout() {
   await supabase.auth.signOut();
@@ -48,9 +74,36 @@ export function getUser() {
 }
 
 // AUTO LOGIN (on refresh)
+// AUTO LOGIN (on refresh)
 export async function initAuth() {
-  const { data } = await supabase.auth.getSession();
-  currentUser = data.session?.user || null;
+  // 1️⃣ Get current session
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    console.error("Error getting session:", error.message);
+    currentUser = null;
+    return currentUser;
+  }
+
+  // 2️⃣ Set currentUser if session exists
+  currentUser = session?.user || null;
+
+  // 3️⃣ Optional: listen for session changes (login/logout)
+  supabase.auth.onAuthStateChange((event, newSession) => {
+    currentUser = newSession?.user || null;
+
+    if (currentUser) {
+      // Update UI when user logs in
+      UI.showUserUI(currentUser);
+    } else {
+      // Update UI when user logs out
+      UI.showGuestUI();
+    }
+  });
+
   return currentUser;
 }
 

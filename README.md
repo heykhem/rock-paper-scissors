@@ -23,12 +23,11 @@ A **dynamic and interactive Rock Paper Scissors game** with multiplayer support,
 - **Player Profile:** Track your wins, losses, and game history.  
 - **Smooth Animations:** GSAP-powered hand gestures and UI transitions.  
 - **Sound Effects:** Audio feedback on button clicks and game events.  
-- **Input Locking:** Prevents button spamming during animations or turns.  
 
 ### ⚡ Upcoming Features
 
 - **Leaderboards:** Global and friends-only ranking system.  
 - **Custom Avatars & Themes:** Personalize your profile and game UI.  
-- **Enhanced Multiplayer:** Matchmaking, chat, and spectator mode.  
+- **Enhanced Multiplayer:** Matchmaking and chat.
 
 ---
