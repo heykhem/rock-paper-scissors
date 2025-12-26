@@ -5,5 +5,12 @@ const config = await fetch("/config").then((res) => res.json());
 
 export const supabase = createClient(
   config.supabaseUrl,
-  config.supabaseAnonKey
+  config.supabaseAnonKey,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  }
 );

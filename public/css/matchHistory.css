@@ -1,0 +1,75 @@
+/* GAME HISTORY */
+.history-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 9999;
+}
+
+.hisotry-modal-wrapper {
+  padding: 40px 60px;
+  color: #fff;
+}
+
+.history-modal-head h1 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.history-logs {
+  margin-top: 3rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-lists {
+  padding: 8px 10px;
+  padding-left: 20px;
+  display: grid;
+  background-color: #262626;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  transition: all 0.2s ease-out;
+  border-radius: 4px;
+}
+
+.history-lists:hover {
+  border-color: #494949;
+}
+
+.game-win-lose {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.game-result-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #b1b1b1;
+}
+
+.game-opponent {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-final-Decison {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.game-final-opponent-name {
+  font-size: 0.9rem;
+}

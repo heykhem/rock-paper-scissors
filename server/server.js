@@ -1,4 +1,3 @@
-// server/server.js
 require("dotenv").config();
 
 const express = require("express");
@@ -8,10 +7,9 @@ const path = require("path");
 const app = express();
 const server = http.createServer(app);
 
-// Middleware
 app.use(express.json());
 
-// Serve static files
+// ✅ Serve static files
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Env config for frontend
@@ -22,8 +20,8 @@ app.get("/config", (req, res) => {
   });
 });
 
-// SPA fallback
-app.use((req, res) => {
+// ✅ Only serve index.html on root
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 

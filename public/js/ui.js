@@ -31,6 +31,9 @@ const warnProgress = document.querySelector(".show-alert-about-progress");
 // === USER PROFILE ===
 const setUsername = document.querySelector(".guest-user-username");
 
+// DURING GAME PLAYING
+const playRoundName = document.querySelector("#user-play-name");
+const playUserProfile = document.getElementById("user-play-profile");
 // === PLAYER SCORE DISPLAY ===
 const player1ScoreDisplay = document.querySelector(".player2-score");
 const player2ScoreDisplay = document.querySelector(".player1-score");
@@ -94,8 +97,6 @@ playGameBtn.addEventListener("click", (e) => {
     .querySelector('input[name="opponent"]:checked')
     .getAttribute("data-opponent");
 
-  console.log(selectedRound, selectedOpponent);
-
   // close modal
   closeModal(newGameModalBox, newGameModalContain);
   playGame({ rounds: selectedRound, opponent: selectedOpponent });
@@ -108,6 +109,9 @@ let currentRound = 1;
 let numberOfRounds = 3; // default
 let index = 0;
 let cycleInterval;
+let gameStartTime = 0;
+let gameEndTime = 0;
+let matchDuration = 0;
 
 // === GAME START BEGIN ===
 const playGame = function ({ rounds, opponent }) {
@@ -116,6 +120,7 @@ const playGame = function ({ rounds, opponent }) {
   computerScore = 0;
   currentRound = 1;
   numberOfRounds = Number(rounds);
+  gameStartTime = Date.now();
 
   // Reset scoreboar size
   gsap.to(currentRoundResult.closest(".score-board-wrapper"), {
@@ -174,7 +179,7 @@ function playRound(userChoice) {
 
   var cycleStop = cycleImages();
 
-  setTimeout(() => {
+  setTimeout(async () => {
     clearInterval(cycleStop);
 
     let computerChoice = computerThink();
@@ -206,11 +211,38 @@ function playRound(userChoice) {
       setTimeout(() => {
         showGameResult();
       }, 100);
+
+      // Game Duration
+      gameEndTime = Date.now();
+      matchDuration = Math.floor((gameEndTime - gameStartTime) / 1000);
+
+      // Save history
+      let user = Auth.getUser(); // assuming this returns current user object
+      let isMultiplayer = false;
+      if (user) {
+        let activeUser = await Auth.getUserProfile(user.id);
+        Game.saveGameHistory({
+          userId: user.id,
+          opponentId: isMultiplayer ? opponent.id : null,
+          userAvatar: activeUser.avatar_url,
+          opponentAvatar: isMultiplayer
+            ? opponent.avatar_url
+            : "assets/avatar/pro-controller.png.png",
+          opponentName: isMultiplayer ? opponent.username : "Computer",
+          userScore,
+          opponentScore: computerScore, // ✅ match JS naming
+          status: userScore > computerScore ? "win" : "lose",
+          matchDuration,
+          rounds: numberOfRounds,
+          roomId: isMultiplayer ? roomId : null,
+          gameType: isMultiplayer ? "multiplayer" : "singleplayer",
+        });
+      }
     } else {
       // Enable buttons for next round
       setTimeout(() => {
         enableChoiceButtons();
-      }, 50);
+      }, 100);
     }
   }, 400);
 }
@@ -339,7 +371,7 @@ function showGameResult() {
 }
 
 function playSound() {
-  let audio = new Audio("../Assets/Sounds/start.mp3");
+  let audio = new Audio("../assets/sound/start.mp3");
   audio.play();
 }
 
@@ -450,11 +482,13 @@ export function showGuestUI() {
   btnLogoutAuth.classList.add("display-none");
 }
 
+const userAvatarBox = document.getElementById("user-avatar-img");
+const userFullName = document.querySelector(".guest-user-display-name");
+const userInfoTopBox = document.querySelector(".guest-user-top");
+
 export async function showUserUI(user) {
-  const activeUser = Auth.getUser();
-
+  userInfoTopBox.classList.remove("display-none");
   landingModalBox.classList.add("display-none");
-
   btnContinue.classList.remove("display-none");
   btnHistory.classList.remove("display-none");
   btnPlayFriend.classList.remove("disabled");
@@ -462,7 +496,13 @@ export async function showUserUI(user) {
   btnLoginAuth.classList.add("display-none");
   btnLogoutAuth.classList.remove("display-none");
 
-  setUsername.textContent = Auth.getUsername();
+  let activeUser = await Auth.getUserProfile(Auth.getUser().id);
+
+  userAvatarBox.src = activeUser.avatar_url;
+  userFullName.textContent = activeUser.full_name;
+  setUsername.textContent = activeUser.username;
+  playRoundName.textContent = activeUser.username;
+  playUserProfile.src = activeUser.avatar_url;
 }
 
 export function closeAuthModal() {
@@ -480,4 +520,6 @@ btnLogoutAuth.addEventListener("click", Auth.logout);
 btnHistory.addEventListener("click", (e) => {
   e.stopPropagation();
   console.log("History is enabled");
+  historyModalBox.style.display = "flex";
+  historyModalContain.style.display = "flex";
 });

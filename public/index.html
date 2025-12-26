@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>(RPS) Rock Paper Scissor Game</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/matchHistory.css" />
   </head>
   <body>
     <div class="container">
@@ -23,7 +24,7 @@
 
           <div class="game-options no-select">
             <button class="game-btn new-game">New Game</button>
-            <button class="game-btn game-continue display-none">
+            <button class="game-btn game-continue display-none disabled">
               Continue
             </button>
             <button class="game-btn game-history display-none">History</button>
@@ -32,9 +33,13 @@
 
         <div class="game-settings no-select">
           <div class="game-login-user-btn">
-            <div class="guest-user-top">
+            <div class="guest-user-top display-none">
               <div class="guest-user-icon-box">
-                <img src="assets/avatar/boxy.png" alt="user-avatar" />
+                <img
+                  src="assets/avatar/boxy.png"
+                  alt="user-avatar"
+                  id="user-avatar-img"
+                />
               </div>
               <div class="guest-user-name">
                 <div class="guest-user-display-name">Guest User</div>
@@ -77,15 +82,15 @@
           <div class="left-player-info no-select">
             <div class="user-icon-profile">
               <img
-                src="assets/avatar/champ.png"
+                src="assets/avatar/pro-controller.png"
                 alt="pic"
                 draggable="false"
                 loading="lazy"
               />
             </div>
             <div class="game-user-info">
-              <h1 class="game-user-info-heading">ATIT69</h1>
-              <p>SiGMA</p>
+              <h1 class="game-user-info-heading">CMP</h1>
+              <p>ROBODOX</p>
             </div>
           </div>
           <div class="lhand no-select">
@@ -112,11 +117,12 @@
                 alt="pic"
                 draggable="false"
                 loading="lazy"
+                id="user-play-profile"
               />
             </div>
             <div class="game-user-info">
-              <h1 class="game-user-info-heading">Ishan21</h1>
-              <p>SeNSI</p>
+              <h1 class="game-user-info-heading" id="user-play-name">Guest</h1>
+              <p>guestiii</p>
             </div>
           </div>
           <div class="rhand no-select">
@@ -143,7 +149,7 @@
         <!-- SCORE BOARD END -->
 
         <!-- DEFAULT HOME SCREEN BEGIN -->
-        <div class="default-home-modal" style="display: flex">
+        <div class="default-home-modal" style="display: none">
           <div class="home-modal-wrapper">
             <div class="default-home-icon">
               <img
@@ -162,9 +168,11 @@
         <!-- DEFAULT HOME SCREEN END -->
 
         <!-- HISTORY MODAL BEGIN -->
-        <div class="history-modal" style="display: none">
+        <div class="history-modal">
           <div class="hisotry-modal-wrapper">
-            <div class="history-modal-head"><h1>History</h1></div>
+            <div class="history-modal-head">
+              <h1>History</h1>
+            </div>
 
             <div class="history-logs">
               <div class="history-lists">
@@ -180,7 +188,27 @@
                   </div>
                 </div>
                 <div class="game-win-lose-score">
-                  <span>3</span>- <span>1</span>
+                  <span>3</span> - <span>1</span>
+                </div>
+                <div class="game-play-duration">
+                  <span>1min 2sec</span>
+                </div>
+                <div class="game-date-played">1hrs Ago</div>
+              </div>
+              <div class="history-lists">
+                <div class="game-win-lose">
+                  <div class="game-result-icon">
+                    <img src="" alt="game image" />
+                  </div>
+                  <div class="game-opponent">
+                    <div class="game-final-Decison">VICTORY</div>
+                    <div class="game-final-opponent-name">
+                      <span>vs.</span> <span>Computer</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="game-win-lose-score">
+                  <span>3</span> - <span>1</span>
                 </div>
                 <div class="game-play-duration">
                   <span>1min 2sec</span>
@@ -351,6 +379,6 @@
       crossorigin="anonymous"
     ></script>
     <!-- Main entry -->
-    <script type="module" src="/js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

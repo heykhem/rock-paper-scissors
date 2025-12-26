@@ -3,14 +3,6 @@ import * as UI from "./ui.js";
 
 let currentUser = null;
 
-/**
- * Sign up a new user with full name, email, and password
- * @param {string} fullName - Full name of the user
- * @param {string} email - User email
- * @param {string} password - User password
- * @returns {object} - { user, error }
- */
-
 // LOGIN
 export async function login(email, password) {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -46,7 +38,7 @@ export async function signup(fullName, email, password) {
         id: data.user.id, // Link to auth.users.id
         full_name: fullName,
         username: username,
-        avatar_url: null, // You can assign a default avatar here
+        avatar_url: "assets/avatar/sensi.png", // ✅ default avatar
       },
     ]);
 
@@ -59,13 +51,23 @@ export async function signup(fullName, email, password) {
     return { user: null, error: err };
   }
 }
+
 // LOGOUT
 export async function logout() {
-  await supabase.auth.signOut();
-  currentUser = null;
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
 
-  // Refresh UI after logout
-  UI.showGuestUI(); // function that switches UI to guest mode
+    // Clear local user state
+    currentUser = null;
+
+    // Update UI dynamically
+    UI.showGuestUI();
+
+    console.log("User logged out successfully");
+  } catch (err) {
+    console.error("Logout error:", err.message);
+  }
 }
 
 // GET USER
@@ -74,40 +76,27 @@ export function getUser() {
 }
 
 // AUTO LOGIN (on refresh)
-// AUTO LOGIN (on refresh)
 export async function initAuth() {
-  // 1️⃣ Get current session
   const {
     data: { session },
-    error,
   } = await supabase.auth.getSession();
 
-  if (error) {
-    console.error("Error getting session:", error.message);
-    currentUser = null;
-    return currentUser;
-  }
-
-  // 2️⃣ Set currentUser if session exists
-  currentUser = session?.user || null;
-
-  // 3️⃣ Optional: listen for session changes (login/logout)
-  supabase.auth.onAuthStateChange((event, newSession) => {
-    currentUser = newSession?.user || null;
-
-    if (currentUser) {
-      // Update UI when user logs in
-      UI.showUserUI(currentUser);
-    } else {
-      // Update UI when user logs out
-      UI.showGuestUI();
-    }
-  });
-
+  currentUser = session?.user ?? null;
   return currentUser;
 }
 
-export function getUsername() {
-  if (!currentUser) return null;
-  return currentUser.user_metadata?.username || currentUser.email.split("@")[0];
+// GET USER PROFILE
+export async function getUserProfile(userId) {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("full_name, username, avatar_url")
+    .eq("id", userId)
+    .single(); // we expect only one profile
+
+  if (error) {
+    console.error("Error fetching profile:", error);
+    return null;
+  }
+
+  return data; // { full_name, username, avatar_url }
 }
