@@ -2,6 +2,7 @@
 
 import * as Game from "./game.js";
 import * as Auth from "./auth.js";
+import * as Utiltiy from "./utility.js";
 
 // === DOM ELEMENTS ===
 
@@ -217,7 +218,8 @@ function playRound(userChoice) {
       matchDuration = Math.floor((gameEndTime - gameStartTime) / 1000);
 
       // Save history
-      let user = Auth.getUser(); // assuming this returns current user object
+      let user = Auth.getUser();
+
       let isMultiplayer = false;
       if (user) {
         let activeUser = await Auth.getUserProfile(user.id);
@@ -227,11 +229,11 @@ function playRound(userChoice) {
           userAvatar: activeUser.avatar_url,
           opponentAvatar: isMultiplayer
             ? opponent.avatar_url
-            : "assets/avatar/pro-controller.png.png",
+            : "assets/avatar/pro-controller.png",
           opponentName: isMultiplayer ? opponent.username : "Computer",
           userScore,
           opponentScore: computerScore, // ✅ match JS naming
-          status: userScore > computerScore ? "win" : "lose",
+          status: Game.showStatus(userScore, computerScore),
           matchDuration,
           rounds: numberOfRounds,
           roomId: isMultiplayer ? roomId : null,
@@ -517,9 +519,41 @@ export function openAuthModal() {
 btnLogoutAuth.addEventListener("click", Auth.logout);
 
 // ===HISTORY MODAL===
-btnHistory.addEventListener("click", (e) => {
+btnHistory.addEventListener("click", async (e) => {
   e.stopPropagation();
-  console.log("History is enabled");
-  historyModalBox.style.display = "flex";
-  historyModalContain.style.display = "flex";
+  historyModalBox.style.display = "block";
+  historyModalContain.style.display = "block";
+
+  let historyList = historyModalContain.querySelector(".history-logs");
+  historyList.innerHTML = "";
+
+  let user = Auth.getUser();
+  let historyData = await Game.fetchGameHistory(user.id);
+  historyData.data.forEach((data, index) => {
+    historyList.innerHTML += `
+       <div class="history-lists">
+                <div class="game-win-lose">
+                  <div class="game-result-icon">
+                    <img src="${data.opponent_avatar}" alt="game image" />
+                  </div>
+                  <div class="game-opponent">
+                    <div class="game-final-Decison">${data.status}</div>
+                    <div class="game-final-opponent-name">
+                      <span>vs.</span> <span>${data.opponent_name}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="game-win-lose-score">
+                  <span>${data.user_score}</span> - <span>${
+      data.opponent_score
+    }</span>
+                </div>
+                <div class="game-play-duration">
+                  <span>${data.match_duration} sec</span>
+                </div>
+                <div class="game-date-played">${Utiltiy.formatDateTime(
+                  data.played_at
+                )}</div>
+              </div>`;
+  });
 });

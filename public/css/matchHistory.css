@@ -7,11 +7,15 @@
   height: 100%;
   background-color: black;
   z-index: 9999;
+  inset: 0;
 }
 
 .hisotry-modal-wrapper {
+  max-height: 100vh;
   padding: 40px 60px;
   color: #fff;
+  display: block;
+  overflow-y: auto;
 }
 
 .history-modal-head h1 {
@@ -56,6 +60,15 @@
   border-radius: 50%;
   overflow: hidden;
   background-color: #b1b1b1;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-result-icon img {
+  width: 42px;
 }
 
 .game-opponent {

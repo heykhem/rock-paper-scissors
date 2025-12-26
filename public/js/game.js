@@ -7,6 +7,12 @@ export function winCheck(user, computer) {
   return (user - computer + 3) % 3 === 1;
 }
 
+export function showStatus(user, computer) {
+  if (user === computer) return "DRAW";
+  if (user > computer) return "VICTORY";
+  if (computer > us) return "LOSE";
+}
+
 export async function saveGameHistory({
   userId,
   opponentId,
@@ -48,4 +54,26 @@ export async function saveGameHistory({
     console.error("❌ Failed to save game history:", err.message);
     return null;
   }
+}
+
+export async function fetchGameHistory(userId, page = 1, pageSize = 10) {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  const { data, error, count } = await supabase
+    .from("game_history")
+    .select("*", { count: "exact" })
+    .eq("user_id", userId)
+    .order("played_at", { ascending: false })
+    .range(from, to);
+
+  if (error) {
+    console.error("Failed to fetch game history:", error);
+    return { data: [], total: 0 };
+  }
+
+  return {
+    data,
+    total: count, // total records for pagination UI
+  };
 }
